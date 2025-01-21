@@ -13,12 +13,14 @@ router.post('/', async (req, res) => {
     res.status(201).send(produtoCriado)
 })
 
-router.put('/', (req, res) => {
-    res.send('Put ok')
+router.put('/:id', async (req, res) => {
+    const produtoAtualizado = await atualizarProduto(req.params.id, req.body)
+    res.send(produtoAtualizado)
 })
 
-router.delete('/', (req, res) => {
-    res.send('Delete ok')
+router.delete('/:id', async (req, res) => {
+    const produtoDeletado = await deletarProduto(req.params.id)
+    res.send(produtoDeletado)
 })
 
 export default router
