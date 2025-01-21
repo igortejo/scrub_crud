@@ -1,2 +1,2 @@
-# scrub_api
-Projeto utilizando node e express para a disciplina de Princípois de Desenvolvimento Web 2
+# Projeto utilizando node e express para a disciplina de Princípois de Desenvolvimento Web 2
+O projeto consiste em uma API REST desenvolvida para gerenciar os produtos de uma loja especializada na venda de jalecos e pijamas hospitalares. A API será responsável por realizar operações como cadastro, atualização, consulta e exclusão de produtos, permitindo o controle eficiente do estoque e a gestão de informações detalhadas sobre os itens disponíveis.
