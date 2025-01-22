@@ -1,7 +1,8 @@
 import express from 'express'
 import bodyParser from 'body-parser'
-import produtoController from './controller/produto'
-import usuarioController from './controller/usuario'
+import pedidoController from './controller/pedido'
+import usuarioRoutes from './routes/usuarioRoutes'
+import produtoRoutes from './routes/produtoRoutes'
 
 
 const app = express()
@@ -11,8 +12,9 @@ const port = 3000
 app.use(bodyParser.json())
 
 // é meio que uma rota que chama o controller
-app.use('/produto', produtoController)
-app.use('/usuario', usuarioController)
+app.use('/produto', produtoRoutes)
+app.use('/usuario', usuarioRoutes)
+// app.use('/pedido', pedidoController)
 
 
 // faz a chamada para a api

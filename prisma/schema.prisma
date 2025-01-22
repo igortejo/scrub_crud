@@ -19,7 +19,6 @@ model Usuario {
   nome    String?
   idade     Int
 }
-
 //  role    Role     @default(USER)
 
 
