@@ -1,6 +1,6 @@
 import express from 'express'
 import bodyParser from 'body-parser'
-import pedidoController from './controller/pedido'
+import pedidoRoutes from './routes/pedidoRoutes'
 import usuarioRoutes from './routes/usuarioRoutes'
 import produtoRoutes from './routes/produtoRoutes'
 
@@ -14,7 +14,7 @@ app.use(bodyParser.json())
 // é meio que uma rota que chama o controller
 app.use('/produto', produtoRoutes)
 app.use('/usuario', usuarioRoutes)
-// app.use('/pedido', pedidoController)
+app.use('/pedido', pedidoRoutes)
 
 
 // faz a chamada para a api
