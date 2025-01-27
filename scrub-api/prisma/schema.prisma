@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  email   String   @unique
+  nome    String?
+  idade   Int
+// papel   Papel     @default(USER)  (cliente ou adm)
+// endereco  String
+}
+
+model Produto {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  cor         String   
+  tamanho     String?
+// descricao  String  (descricao do produto)
+// preco      Float
+// categoria  String (categoria: jaleco ou scrub)
+}
+
+model Pedido {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  descricao     String
+  usuarioId     Int       // Chave estrangeira //(referência ao cliente que fez o pedido)
+  dataPedido    DateTime  @default(now())
+  valorTotal    Float
+// status (status: pendente, pago, enviado, concluído, cancelado)
+// usuario       Usuario   @relation(fields: [usuarioId], references: [id])   
+}
+
+
+//Relaciona os produtos a um pedido.
+//model ItemPedido {
+//  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+//  pedidoId        String   (referência ao pedido)
+//  produtoId       String?  (referência ao produto)
+//  quantidade      Int
+//  precoUnitario   Float (preço unitário no momento da compra)
+//  subtotal        Float (quantidade × preço unitário)
+//}
+
+
+// comando se eu fizer alguma alteracao na tabela: npx prisma db push
+// comando rodar npx prisma studio
