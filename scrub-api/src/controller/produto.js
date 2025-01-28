@@ -20,4 +20,3 @@ export const deletarProdutoController = async (req, res) => {
     const produtoDeletado = await deletarProduto(req.params.id)
     res.send(produtoDeletado)
 }
-
