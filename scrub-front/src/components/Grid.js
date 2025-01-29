@@ -35,10 +35,7 @@ export const Td = styled.td`
   width: ${(props) => (props.width ? props.width : "auto")};
 `;
 
-
-
-
-const Grid = ( {users, setUsers, setOnEdit}) => {   //users vai receber usuarios do banco de dados
+const Grid = ( {users, setUsers, setOnEdit} ) => {   //users vai receber usuarios do banco de dados
 
     const handleDelete = async (id) => {
         await axios
@@ -53,7 +50,6 @@ const Grid = ( {users, setUsers, setOnEdit}) => {   //users vai receber usuarios
         
         setOnEdit(null);
     }
-
 
     const handleEdit = async (item) => {
         setOnEdit(item);

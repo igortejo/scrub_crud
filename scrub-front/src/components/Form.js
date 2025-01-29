@@ -49,7 +49,7 @@ const Form = ({ getUsers, onEdit, setOnEdit }) => {
     const ref = useRef();
 
     useEffect(() => { //verifca se o formulario que ta recebendo tem algum item de edicao, ou seja, algum item do grid foi clicado o icone de edicao
-        if (onEdit) {
+        if (onEdit && ref.current) { // Verifica se ref.current não é null
             const user = ref.current; //refencia o formulario atual antes da edicao
 
             user.nome.value = onEdit.nome;
@@ -68,7 +68,7 @@ const Form = ({ getUsers, onEdit, setOnEdit }) => {
             !user.email.value ||
             !user.idade.value 
         ) {
-            return toast.warn("Preencha todos os campos!")  //ajeitar esse toast
+            return toast.warn("Preencha todos os campos!") 
         }
 
         if (onEdit) {  //verifica se é um item de edição
