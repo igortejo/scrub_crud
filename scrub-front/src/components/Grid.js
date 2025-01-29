@@ -38,7 +38,27 @@ export const Td = styled.td`
 
 
 
-const Grid = ( {users}) => {   //vai receber usuarios do banco de dados
+const Grid = ( {users, setUsers, setOnEdit}) => {   //users vai receber usuarios do banco de dados
+
+    const handleDelete = async (id) => {
+        await axios
+            .delete("http://localhost:3000/usuario/" + id)
+            .then(({ data }) => {  //esse data é o texto que o backend retorna
+                const newArray = users.filter((user) => user.id !== id); //aqui retorna todos os usuarios, menos aquele que foi deletado
+
+                setUsers(newArray);  //coloca esse newArray filtrado no setUsers
+                toast.success(data); //passa a mensagem no toast
+            })
+            .catch(({ data }) => toast.error(data));
+        
+        setOnEdit(null);
+    }
+
+
+    const handleEdit = async (item) => {
+        setOnEdit(item);
+    }
+
     return (
         <Table>
             <Thead>
@@ -58,10 +78,10 @@ const Grid = ( {users}) => {   //vai receber usuarios do banco de dados
                         <Td width="30%">{item.email}</Td>
                         <Td width="30%">{item.idade}</Td>
                         <Td width="5%">
-                            <FaEdit />
+                            <FaEdit onClick={() => handleEdit(item)}/>
                         </Td> 
                         <Td width="5%">
-                            <FaTrash />
+                            <FaTrash onClick={() => handleDelete(item.id)} />
                         </Td>
                     </Tr>
                 ))}

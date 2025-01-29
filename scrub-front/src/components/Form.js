@@ -1,5 +1,9 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
+import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 
 const FormContainer = styled.form`
@@ -41,11 +45,64 @@ const Button = styled.button`
 `;
 
 
-const Form = ({ onEdit }) => {
+const Form = ({ getUsers, onEdit, setOnEdit }) => {
     const ref = useRef();
 
+    useEffect(() => { //verifca se o formulario que ta recebendo tem algum item de edicao, ou seja, algum item do grid foi clicado o icone de edicao
+        if (onEdit) {
+            const user = ref.current; //refencia o formulario atual antes da edicao
+
+            user.nome.value = onEdit.nome;
+            user.email.value = onEdit.email;
+            user.idade.value = onEdit.idade;
+        }
+    }, [onEdit]);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault() //para nao recarregar a pagina
+
+        const user = ref.current //referencia o formulario 
+
+        if ( //se algum dos campos nao for preenchido
+            !user.nome.value ||
+            !user.email.value ||
+            !user.idade.value 
+        ) {
+            return toast.warn("Preencha todos os campos!")  //ajeitar esse toast
+        }
+
+        if (onEdit) {  //verifica se é um item de edição
+            await axios
+              .put("http://localhost:3000/usuario/" + onEdit.id, {
+                nome: user.nome.value,
+                email: user.email.value,
+                idade: Number(user.idade.value), //o form ta recebendo uma string mas o back espera um int, entao converti pra number
+              })
+              .then(({ data }) => toast.success(data))
+              .catch(({ data }) => toast.error(data));
+
+        } else { // se não for um item de edição é um item de criação
+            await axios
+              .post("http://localhost:3000/usuario", {
+                nome: user.nome.value,
+                email: user.email.value,
+                idade: Number(user.idade.value), //o form ta recebendo uma string mas o back espera um int, entao converti pra number
+              })
+              .then(({ data }) => toast.success(data))
+              .catch(({ data }) => toast.error(data));
+        }
+
+        //apos eu incluir ou editar um item eu limpo o formulario:
+        user.nome.value = "";
+        user.email.value = "";
+        user.idade.value = "";
+
+        setOnEdit(null); //para depois da edicao poder fazer uma inclusao sem da conflito
+        getUsers(); //atualiza o grid
+    };
+
     return (
-        <FormContainer ref={ref}>
+        <FormContainer ref={ref} onSubmit={handleSubmit}>
             <InputArea>
                 <Label>Nome</Label>
                 <Input name="nome" />
