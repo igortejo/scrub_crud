@@ -8,16 +8,16 @@ export const listarPedidosController = async (req, res) => {
 
 export const criarPedidoController = async (req, res) => {
     const pedidoCriado = await criarPedido(req.body)
-    res.status(201).send(pedidoCriado)
+    res.status(201).json("Pedido criado com sucesso")
 
 }
 
 export const atualizarPedidoController = async (req, res) => {
     const pedidoAtualizado = await atualizarPedido(req.params.id, req.body)
-    res.send(pedidoAtualizado)
+    res.status(200).json("Pedido atualizado com sucesso")
 }
 
 export const deletarPedidoController = async (req, res) => {
     const pedidoDeletado = await deletarPedido(req.params.id)
-    res.send(pedidoDeletado)
+    res.status(200).json("Pedido deletado com sucesso")
 }

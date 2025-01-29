@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import Form from "../components/Form";
-import Grid from "../components/Grid";
+import Form from "../components/user/UserForm";
+import Grid from "../components/user/UserGrid";
 // import { Link } from "react-router-dom";
 import styled from "styled-components";
 

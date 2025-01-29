@@ -8,7 +8,6 @@ export const listarPedidos = async () => {
             id: true,
             descricao: true,
             usuarioId: true,
-            dataPedido: true,
             valorTotal: true
         }
     })

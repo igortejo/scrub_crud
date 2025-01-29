@@ -35,7 +35,7 @@ model Pedido {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
   descricao     String
   usuarioId     Int       // Chave estrangeira //(referência ao cliente que fez o pedido)
-  dataPedido    DateTime  @default(now())
+//  dataPedido    DateTime  @default(now())
   valorTotal    Float
 // status (status: pendente, pago, enviado, concluído, cancelado)
 // usuario       Usuario   @relation(fields: [usuarioId], references: [id])   

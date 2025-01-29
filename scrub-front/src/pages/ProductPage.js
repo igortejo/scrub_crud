@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import Form from "../components/Form";
-import Grid from "../components/Grid";
+import Form from "../components/product/ProductForm";
+import Grid from "../components/product/ProductGrid";
 // import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -18,33 +18,33 @@ const Container = styled.div`
 
 const Title = styled.h2``;
 
-const UserPage = () => {
-  const [users, setUsers] = useState([]);
+const ProductPage = () => {
+  const [products, setProducts] = useState([]);
   const [onEdit, setOnEdit] = useState(null);
 
-  const getUsers = async () => {
+  const getProducts = async () => {
     try {
       const res = await axios.get("http://localhost:3000/produto");
-      setUsers(res.data.sort((a, b) => (a.nome > b.nome ? 1 : -1))); //ordenar o resultado
+      setProducts(res.data) //.sort((a, b) => (a.nome > b.nome ? 1 : -1))); ordenar o resultado
     } catch (error) {
       toast.error(error);
     }
   };
 
   useEffect(() => {
-    getUsers();
-  }, [setUsers]);
+    getProducts();
+  }, [setProducts]);
 
   return (
     <>
     <Container>
       <Title>CRUD PRODUTOS</Title>
-      <Form onEdit={onEdit} setOnEdit={setOnEdit} getUsers={getUsers} /> {/*esse getUsers vai atualizar os dados */}
-      <Grid users={users} setUsers={setUsers} setOnEdit={setOnEdit} />
+      <Form onEdit={onEdit} setOnEdit={setOnEdit} getProducts={getProducts} /> {/*esse getProducts vai atualizar os dados */}
+      <Grid products={products} setProducts={setProducts} setOnEdit={setOnEdit} />
       {/* <Link to="/products">Ir para Produtos</Link> */}
     </Container>
     </>
   );
 };
 
-export default UserPage;
+export default ProductPage;
