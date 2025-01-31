@@ -13,14 +13,23 @@ export const listarUsuarios = async () => {
     return usuarios
 }
 
-export const criarUsuario = async ({ email, nome , idade}) => {
+export const criarUsuario = async ({ email, nome , idade}, res) => {
+
+    if (await prisma.usuario.findUnique({  //procura se o email ja ta cadastrado
+      where: {
+        email
+        } 
+      })) {
+      return res.status(400).json("Usuário ja existe")
+    } 
+
     return await prisma.usuario.create({  //esse usuario é o nome da tabela
-        data: {
-          email,
-          nome,
-          idade,
-        },
-      });
+      data: {
+        email,
+        nome,
+        idade,
+      },
+    });
 }
 
 export const atualizarUsuario = async (id, { email, nome , idade}) => {

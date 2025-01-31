@@ -7,7 +7,7 @@ export const listarUsuariosController = async (req, res) => {
 }
 
 export const criarUsuarioController = async (req, res) => {
-    const usuarioCriado = await criarUsuario(req.body)
+    const usuarioCriado = await criarUsuario(req.body, res)
     res.status(201).json("Usuário criado com sucesso")
 }
 

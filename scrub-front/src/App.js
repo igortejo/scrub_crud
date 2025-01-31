@@ -1,4 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import LogInPage  from "./pages/LogInPage";
+import LoginClientPage from "./pages/LoginClientPage";
+import LoginManangerPage from "./pages/LoginManangerPage";
 import UserPage from "./pages/UserPage";
 import ProductPage from "./pages/ProductPage";
 import OrderPage from "./pages/OrderPage";
@@ -10,7 +13,9 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<h2>Bem vindo ao sistema CRUD da loja ScrubUP</h2>} />
+        <Route path="/" element={<LogInPage />} />
+        <Route path="/cliente" element={<LoginClientPage />} />
+        <Route path="/gerente" element={<LoginManangerPage />} />
         <Route path="/usuario" element={<UserPage />} />
         <Route path="/produto" element={<ProductPage />} />
         <Route path="/pedido" element={<OrderPage />} />
