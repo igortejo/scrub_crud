@@ -12,7 +12,7 @@ const port = 3000
 
 
 app.use(bodyParser.json()) // faz com que pegue os dados que são passados no body da requisição e transforme em um json
-app.use(cors())
+app.use(cors())  //evitar conflitos quando tiver rodando localmente
 
 
 // é meio que uma rota que chama o controller
