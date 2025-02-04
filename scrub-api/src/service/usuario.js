@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
+// import { PrismaClient } from '@prisma/client'
+// const prisma = new PrismaClient()
 
 import { db } from "../db.js"
 
@@ -16,20 +16,6 @@ export const listarUsuarios = async (req, res) => {
   }
 };
 
-// export const listarUsuarios = async () => {
-//      const usuarios = await prisma.usuario.findMany({ //Isso garante que o Prisma só retorne os campos especificados
-//         select: {
-//             id: true,
-//             email: true,
-//             nome: true,
-//             idade: true,
-//           },
-//      })
-//     return usuarios
-// }
-
-
-
 export const criarUsuario = async (req) => {
   const consulta = "INSERT INTO usuarios(`nome`, `email`, `idade`) VALUES(?)";
 
@@ -41,6 +27,40 @@ export const criarUsuario = async (req) => {
 
     await db.query(consulta, [values]); 
 };
+
+export const atualizarUsuario = async (req) => {
+  const consulta = "UPDATE usuarios SET `nome` = ?, `email` = ?, `idade` = ? WHERE `id` = ?";
+
+  const values = [
+    req.body.email,
+    req.body.nome,
+    req.body.idade
+  ];
+
+    await db.query(consulta, [...values, req.params.id]); 
+};
+
+export const deletarUsuario = async (req) => {
+  const consulta = "DELETE FROM usuarios WHERE `id` = ?";
+
+    await db.query(consulta, req.params.id); 
+};
+
+
+
+
+
+// export const listarUsuarios = async () => {
+//      const usuarios = await prisma.usuario.findMany({ //Isso garante que o Prisma só retorne os campos especificados
+//         select: {
+//             id: true,
+//             email: true,
+//             nome: true,
+//             idade: true,
+//           },
+//      })
+//     return usuarios
+// }
 
 // export const criarUsuario = async ({ email, nome , idade}, res) => {
 
@@ -61,20 +81,6 @@ export const criarUsuario = async (req) => {
 //     });
 // }
 
-
-export const atualizarUsuario = async (req) => {
-  const consulta = "UPDATE usuarios SET `nome` = ?, `email` = ?, `idade` = ? WHERE `id` = ?";
-
-  const values = [
-    req.body.email,
-    req.body.nome,
-    req.body.idade
-  ];
-
-    await db.query(consulta, [...values, req.params.id]); 
-};
-
-
 // export const atualizarUsuario = async (id, { email, nome , idade}) => {
 //     return await prisma.usuario.update({  //esse usuario é o nome da tabela
 //         where: {
@@ -87,13 +93,6 @@ export const atualizarUsuario = async (req) => {
 //         },
 //       });
 // }
-
-
-export const deletarUsuario = async (req) => {
-  const consulta = "DELETE FROM usuarios WHERE `id` = ?";
-
-    await db.query(consulta, [req.params.id]); 
-};
 
 // export const deletarUsuario = async (id) => {
 //     return await prisma.usuario.delete({
