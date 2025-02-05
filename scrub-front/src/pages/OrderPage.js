@@ -18,7 +18,7 @@ const Container = styled.div`
 
 const Title = styled.h2``;
 
-const UserPage = () => {
+const OrderPage = () => {
   const [orders, setOrders] = useState([]);
   const [onEdit, setOnEdit] = useState(null);
 
@@ -47,4 +47,4 @@ const UserPage = () => {
   );
 };
 
-export default UserPage;
+export default OrderPage;

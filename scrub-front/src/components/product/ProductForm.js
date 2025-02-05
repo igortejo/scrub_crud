@@ -39,9 +39,19 @@ const Button = styled.button`
     cursor: pointer;
     border-radius: 5px;
     border: none;
-    background-color: #2c73d2;
+    background-color: #56c5d0;
     color: white;
     height: 42px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+
+    &:hover {
+        background-color: #3aa9b5; /* Cor mais escura no hover */
+        transform: translateY(-2px); /* Efeito de levantar */
+    }
+
+    &:active {
+        transform: translateY(0); /* Efeito de pressionar */
+    }
 `;
 
 
