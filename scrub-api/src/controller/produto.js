@@ -13,10 +13,18 @@ export const criarProdutoController = async (req, res) => {
 
 export const atualizarProdutoController = async (req, res) => {
     const produtoAtualizado = await atualizarProduto(req)
-    res.status(200).json("Produto atualizado com sucesso")
+    if (produtoAtualizado != null) {
+        res.status(200).json("Produto atualizado com sucesso")
+    } else {
+        res.status(404).json("Produto não encontrado")
+    }
 }
 
 export const deletarProdutoController = async (req, res) => {
     const produtoDeletado = await deletarProduto(req)
-    res.status(200).json("Produto deletado com sucesso")
+    if (produtoDeletado != null) {
+        res.status(200).json("Produto deletado com sucesso")
+    } else {
+        res.status(404).json("Produto não encontrado")
+    }
 }

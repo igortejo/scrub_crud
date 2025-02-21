@@ -72,7 +72,7 @@ const Link = styled.a`
     font-weight: bold;
 `;
 
-const LogInPage = () => {
+const HomePage = () => {
     return (
         <>
             <Header>
@@ -84,10 +84,10 @@ const LogInPage = () => {
                 <Title>Bem-vindo ao sistema CRUD da loja ScrubUP</Title>
                 <LogIn>
                     <LogInButton>
-                        <Link href="/cliente">Cliente</Link>
+                        <Link href="/cliente/login">Cliente</Link>
                     </LogInButton>
                     <LogInButton>
-                        <Link href="/gerente">Gerente</Link>
+                        <Link href="/gerente/login">Gerente</Link>
                     </LogInButton>
                 </LogIn>
             </Container>
@@ -95,4 +95,4 @@ const LogInPage = () => {
     );
 };
 
-export default LogInPage;
+export default HomePage;

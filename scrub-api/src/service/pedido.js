@@ -1,91 +1,66 @@
-// import { PrismaClient } from '@prisma/client'
-// const prisma = new PrismaClient()
-
-import { db } from "../db.js"
+const  Pedido  = require('../model/pedido');
 
 export const listarPedidos = async (req, res) => {
-    const consulta = "SELECT * FROM pedidos";
-  
-    try {
-      const [data] = await db.query(consulta); 
-      return data;
-      
+  try {
+      return await Pedido.findAll();    
+
     } catch (err) {
-      throw new Error("Erro ao buscar pedidos: " + err.message);
+      throw new Error("Erro ao listar pedidos: " + err.message);
     }
   };
   
   export const criarPedido = async (req) => {
-    const consulta = "INSERT INTO pedidos(`descricao`, `usuarioId`, `valorTotal`) VALUES(?)";
-  
-    const values = [
-      req.body.descricao,
-      req.body.usuarioId,
-      req.body.valorTotal
-    ];
-  
-      await db.query(consulta, [values]); 
+    try {
+      const {descricao, usuarioId, valorTotal } = req.body;
+      const pedido = await Pedido.create({
+        descricao,
+        usuarioId,
+        valorTotal
+      })
+      return pedido;
+    } catch (error) {
+      throw new Error("Erro ao criar pedido: " + error.message);
+    }
   };
   
   export const atualizarPedido = async (req) => {
-    const consulta = "UPDATE pedidos SET `descricao` = ?, `usuarioId` = ?, `valorTotal` = ? WHERE `id` = ?";
-  
-    const values = [
-      req.body.descricao,
-      req.body.usuarioId,
-      req.body.valorTotal
-    ];
-  
-      await db.query(consulta, [...values, req.params.id]); 
+
+    try {
+      const {descricao, usuarioId, valorTotal } = req.body;
+      const { id } = req.params;
+      const pedido = await Pedido.findByPk(id);
+
+      if(pedido) {
+        const pedido = Pedido.update({
+          descricao,
+          usuarioId,
+          valorTotal
+        }, {
+          where: {
+            id: id
+          }
+        })
+      }
+      return pedido;
+    } catch (error) {
+      throw new Error("Erro ao atualizar pedido: " + error.message);
+    }
   };
   
   export const deletarPedido = async (req) => {
-    const consulta = "DELETE FROM pedidos WHERE `id` = ?";
-  
-      await db.query(consulta, req.params.id); 
+    try {
+      const { id } = req.params;
+      const pedido = await Pedido.findByPk(id); 
+
+      if(pedido) {
+        const pedido = await Pedido.destroy({
+          where: {
+            id: id
+          }
+        })
+      }
+      return pedido;
+    } catch (error) {
+      throw new Error("Erro ao deletar pedido: " + error.message);
+    }
   };
-  
-
-// export const listarPedidos = async () => {
-//     const pedidosLista = prisma.pedido.findMany({
-//         select: {
-//             id: true,
-//             descricao: true,
-//             usuarioId: true,
-//             valorTotal: true
-//         }
-//     })
-//     return pedidosLista
-// }
-
-
-// export const criarPedido = async ({ descricao, usuarioId, valorTotal }) => {
-//     return await prisma.pedido.create({
-//         data: {
-//             descricao,
-//             usuarioId,
-//             valorTotal
-//         }
-//     })
-// }
-
-// export const atualizarPedido = async (id, { descricao, usuarioId, valorTotal }) => {
-//     return await prisma.pedido.update({
-//         where: {
-//             id: id
-//         },
-//         data: {
-//             descricao,
-//             usuarioId,
-//             valorTotal
-//         }
-//     })
-// }
-
-// export const deletarPedido = async (id) => {
-//     return await prisma.pedido.delete({
-//         where: {
-//             id: id
-//         }
-//     })
-// }

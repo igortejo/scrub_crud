@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import LogInPage  from "./pages/LogInPage";
-import LoginClientPage from "./pages/LoginClientPage";
-import LoginManangerPage from "./pages/LoginManangerPage";
-import Login from "./pages/Login";
+import HomePage  from "./pages/HomePage";
+import LoginCliente from "./pages/LoginCliente";
 import ClienteHomeScreen from "./pages/ClienteHomeScreen"
+import LoginGerente from "./pages/LoginGerente";
+import GerenteHomeScreen from "./pages/GerenteHomeScreen"
 import UserPage from "./pages/UserPage";
 import ProductPage from "./pages/ProductPage";
 import OrderPage from "./pages/OrderPage";
@@ -15,11 +15,11 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LogInPage />} />
-        <Route path="/cliente/login" element={<Login />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/cliente/login" element={<LoginCliente />} />
+        <Route path="/gerente/login" element={<LoginGerente />} />
         <Route path="/cliente/homeScreen" element={<ClienteHomeScreen />} />
-        <Route path="/cliente/signin" element={<LoginClientPage />} />
-        <Route path="/gerente" element={<LoginManangerPage />} />
+        <Route path="/gerente/homeScreen" element={<GerenteHomeScreen />} />
         <Route path="/usuario" element={<UserPage />} />
         <Route path="/produto" element={<ProductPage />} />
         <Route path="/pedido" element={<OrderPage />} />

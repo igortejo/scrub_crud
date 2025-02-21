@@ -4,10 +4,8 @@ import {listarPedidosController, criarPedidoController, atualizarPedidoControlle
 const router = express.Router()
 
 router.get('/', listarPedidosController);
-// router.get('/', pedidoUsuarioController);
 router.post('/', criarPedidoController);
 router.put('/:id', atualizarPedidoController);
 router.delete('/:id', deletarPedidoController);
-
 
 export default router

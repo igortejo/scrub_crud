@@ -56,7 +56,7 @@ const Button = styled.button`
 `;
 
 
-const Login = () => {  
+const LoginGerente = () => {  
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate();
@@ -65,13 +65,13 @@ const Login = () => {
         e.preventDefault();
 
         try {
-          const response = await axios.post("http://localhost:3000/auth/cliente/login", {email, password});
+          const response = await axios.post("http://localhost:3000/auth/gerente/login", {email, password});
           if (response.data.success) {
             toast.success(response.data.message || 'Sucesso ao fazer login!')
             console.log(response)
             const token = response.data.token;
             sessionStorage.setItem("authToken", token); //armazenando o token
-            navigate("/cliente/homeScreen")  //assim que der sucesso no login, vai pra essa pagina
+            navigate("/gerente/homeScreen")  //assim que der sucesso no login, vai pra essa pagina
 
 
           } else {
@@ -87,7 +87,7 @@ const Login = () => {
     return (
       <>
         <LogInContainer onSubmit={handleSubmit}>
-          <h2>Login Cliente</h2>
+          <h2>Login Gerente</h2>
             <InputArea>
               <Label>Email</Label>
               <Input 
@@ -106,7 +106,6 @@ const Login = () => {
 
             <Button type="submit">Entrar</Button>
 
-            <h6>Não tem conta? <a href="/usuario">Cadastre-se</a></h6>
             <h5><a href="/">Voltar</a></h5>
 
         </LogInContainer>
@@ -114,4 +113,4 @@ const Login = () => {
     );
   };
   
-  export default Login;
+  export default LoginGerente;

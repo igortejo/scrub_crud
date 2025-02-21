@@ -43,7 +43,7 @@ const Button = styled.div`
     }
 `;
 
-function ClienteHomeScreen() {
+function GerenteHomeScreen() {
 
     const [userData, setUserData] = useState("");
     const navigate = useNavigate();
@@ -63,7 +63,7 @@ function ClienteHomeScreen() {
         }
         // Make the API request with the token in the Authorization header
         const response = await axios.get(
-            "http://localhost:3000/auth/cliente/getClienteDetalhes",
+            "http://localhost:3000/auth/gerente/getGerenteDetalhes",
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -87,6 +87,14 @@ function ClienteHomeScreen() {
       }
     };
 
+    const goToUser = () => {
+      navigate("/usuario")
+    }
+
+    const goToProduct = () => {
+      navigate("/produto")
+    }
+
     const goToOrder = () => {
       navigate("/pedido")
     }
@@ -94,18 +102,24 @@ function ClienteHomeScreen() {
     return (
       <>
       <Container>
-        <h2 style={{ textAlign: "center" }}>Bem vindo(a) a página do Cliente</h2>
+        <h2 style={{ textAlign: "center" }}>Bem vindo(a) a página do Gerente</h2>
 
         <ButtonContainer>
-
-          <Button onClick={goToOrder}>
-            Realizar Pedido
+          <Button onClick={goToUser}>
+            CRUD Usuario
           </Button>
 
+          <Button onClick={goToProduct}>
+            CRUD Produto
+          </Button>
+
+          <Button onClick={goToOrder}>
+            CRUD Pedido
+          </Button>
         </ButtonContainer>
       </Container>
       </>
     );
 }
 
-export default ClienteHomeScreen;
+export default GerenteHomeScreen;

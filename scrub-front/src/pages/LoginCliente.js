@@ -1,4 +1,8 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom"
 import styled from "styled-components";
+import axios from "axios";
+import { toast } from "react-toastify"
 
 const LogInContainer = styled.form`
     width: 500px;
@@ -52,19 +56,52 @@ const Button = styled.button`
 `;
 
 
-const LoginClientPage = () => {  
+const LoginCliente = () => {  
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+          const response = await axios.post("http://localhost:3000/auth/cliente/login", {email, password});
+          if (response.data.success) {
+            toast.success(response.data.message || 'Sucesso ao fazer login!')
+            console.log(response)
+            const token = response.data.token;
+            sessionStorage.setItem("authToken", token); //armazenando o token
+            navigate("/cliente/homeScreen")  //assim que der sucesso no login, vai pra essa pagina
+
+
+          } else {
+            toast.error(response.data.message || 'Falha ao fazer login!')
+          }
+        } catch (error) {
+            console.error('Erro durante login:', error)
+            toast.error( error.response.data.message || 'Algo deu errado, tente novamente!')
+        }
+
+    }
+
     return (
       <>
-        <LogInContainer>
+        <LogInContainer onSubmit={handleSubmit}>
           <h2>Login Cliente</h2>
             <InputArea>
               <Label>Email</Label>
-              <Input></Input>
+              <Input 
+                placeholder="Seu email"
+                onChange={e => setEmail(e.target.value)} 
+              />
             </InputArea>
 
             <InputArea>
               <Label>Senha</Label>
-              <Input></Input>
+              <Input 
+                placeholder="Sua senha"
+                onChange={e => setPassword(e.target.value)}
+              />
             </InputArea>
 
             <Button type="submit">Entrar</Button>
@@ -77,4 +114,4 @@ const LoginClientPage = () => {
     );
   };
   
-  export default LoginClientPage;
+  export default LoginCliente;

@@ -1,103 +1,66 @@
-// import { PrismaClient } from '@prisma/client'
-// const prisma = new PrismaClient()
-
-import { db } from "../db.js"
-
+const  Usuario  = require('../model/usuario');
 
 export const listarUsuarios = async (req, res) => {
-  const consulta = "SELECT * FROM usuarios";
-
   try {
-    const [data] = await db.query(consulta); 
-    return data;
-    
-  } catch (err) {
-    throw new Error("Erro ao buscar usuários: " + err.message);
-  }
+    return await Usuario.findAll();
+} catch (error) {
+    throw new Error("Erro ao listar usuários: " + error.message);
+}
 };
 
 export const criarUsuario = async (req) => {
-  const consulta = "INSERT INTO usuarios(`nome`, `email`, `idade`) VALUES(?)";
-
-  const values = [
-    req.body.email,
-    req.body.nome,
-    req.body.idade
-  ];
-
-    await db.query(consulta, [values]); 
+  try {
+    const { nome, email, idade, senha } = req.body;
+    const usuario = await Usuario.create({
+         nome, 
+         email, 
+         idade, 
+         senha 
+        });
+    return usuario;
+} catch (error) {
+    throw new Error("Erro ao criar usuário: " + error.message);
+} 
 };
 
 export const atualizarUsuario = async (req) => {
-  const consulta = "UPDATE usuarios SET `nome` = ?, `email` = ?, `idade` = ? WHERE `id` = ?";
+  try {
+    const { nome, email, idade, senha } = req.body;
+    const { id } = req.params;
+    const usuario = await Usuario.findByPk(id);
 
-  const values = [
-    req.body.email,
-    req.body.nome,
-    req.body.idade
-  ];
-
-    await db.query(consulta, [...values, req.params.id]); 
+    if (usuario) {
+      const usuario = await Usuario.update({
+        nome,
+        email,
+        idade,
+        senha
+      }, {
+        where: {
+          id: id
+        }
+      })
+    } 
+    return usuario;
+  } catch (error) {
+    throw new Error("Erro ao atualizar usuário: " + error.message);
+  }
 };
 
 export const deletarUsuario = async (req) => {
-  const consulta = "DELETE FROM usuarios WHERE `id` = ?";
+  try {
+    const { id } = req.params;
+    const usuario = await Usuario.findByPk(id);
 
-    await db.query(consulta, req.params.id); 
+    if (usuario) {
+      const usuario = await Usuario.destroy({
+        where: {
+          id: id
+        }
+      });
+    }
+    return usuario;
+  } catch (error) {
+    throw new Error("Erro ao deletar usuário: " + error.message);
+  }
 };
-
-
-
-
-
-// export const listarUsuarios = async () => {
-//      const usuarios = await prisma.usuario.findMany({ //Isso garante que o Prisma só retorne os campos especificados
-//         select: {
-//             id: true,
-//             email: true,
-//             nome: true,
-//             idade: true,
-//           },
-//      })
-//     return usuarios
-// }
-
-// export const criarUsuario = async ({ email, nome , idade}, res) => {
-
-//     if (await prisma.usuario.findUnique({  //procura se o email ja ta cadastrado
-//       where: {
-//         email
-//         } 
-//       })) {
-//       return res.status(400).json("Usuário ja existe")
-//     } 
-
-//     return await prisma.usuario.create({  //esse usuario é o nome da tabela
-//       data: {
-//         email,
-//         nome,
-//         idade,
-//       },
-//     });
-// }
-
-// export const atualizarUsuario = async (id, { email, nome , idade}) => {
-//     return await prisma.usuario.update({  //esse usuario é o nome da tabela
-//         where: {
-//             id: id
-//         },
-//         data: {
-//           email,
-//           nome,
-//           idade,
-//         },
-//       });
-// }
-
-// export const deletarUsuario = async (id) => {
-//     return await prisma.usuario.delete({
-//         where: {
-//             id: id
-//         }
-//     })
-// }

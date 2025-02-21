@@ -14,10 +14,18 @@ export const criarPedidoController = async (req, res) => {
 
 export const atualizarPedidoController = async (req, res) => {
     const pedidoAtualizado = await atualizarPedido(req)
-    res.status(200).json("Pedido atualizado com sucesso")
+    if (pedidoAtualizado != null) {
+        res.status(200).json("Pedido atualizado com sucesso")
+    } else {
+        res.status(404).json("Pedido não encontrado")
+    }
 }
 
 export const deletarPedidoController = async (req, res) => {
     const pedidoDeletado = await deletarPedido(req)
-    res.status(200).json("Pedido deletado com sucesso")
+    if (pedidoDeletado != null) {
+        res.status(200).json("Pedido deletado com sucesso")
+    } else {
+        res.status(404).json("Pedido não encontrado")
+    }
 }
