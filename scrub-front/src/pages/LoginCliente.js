@@ -58,14 +58,14 @@ const Button = styled.button`
 
 const LoginCliente = () => {  
     const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+    const [senha, setsenha] = useState("")
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-          const response = await axios.post("http://localhost:3000/auth/cliente/login", {email, password});
+          const response = await axios.post("http://localhost:3000/auth/cliente/login", {email, senha});
           if (response.data.success) {
             toast.success(response.data.message || 'Sucesso ao fazer login!')
             console.log(response)
@@ -78,9 +78,12 @@ const LoginCliente = () => {
             toast.error(response.data.message || 'Falha ao fazer login!')
           }
         } catch (error) {
-            console.error('Erro durante login:', error)
-            toast.error( error.response.data.message || 'Algo deu errado, tente novamente!')
-        }
+          console.error("Erro durante login:", error);
+          
+          const errorMessage = error.response?.data?.message || "Algo deu errado, tente novamente!";
+          toast.error(errorMessage);
+      }
+      
 
     }
 
@@ -92,6 +95,7 @@ const LoginCliente = () => {
               <Label>Email</Label>
               <Input 
                 placeholder="Seu email"
+                value={email}
                 onChange={e => setEmail(e.target.value)} 
               />
             </InputArea>
@@ -100,7 +104,8 @@ const LoginCliente = () => {
               <Label>Senha</Label>
               <Input 
                 placeholder="Sua senha"
-                onChange={e => setPassword(e.target.value)}
+                value={senha}
+                onChange={e => setsenha(e.target.value)}
               />
             </InputArea>
 

@@ -61,7 +61,6 @@ function GerenteHomeScreen() {
           // setError('Usuario nao esta logado');
           return;
         }
-        // Make the API request with the token in the Authorization header
         const response = await axios.get(
             "http://localhost:3000/auth/gerente/getGerenteDetalhes",
             {

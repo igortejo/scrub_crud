@@ -58,14 +58,14 @@ const Button = styled.button`
 
 const LoginGerente = () => {  
     const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+    const [senha, setsenha] = useState("")
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-          const response = await axios.post("http://localhost:3000/auth/gerente/login", {email, password});
+          const response = await axios.post("http://localhost:3000/auth/gerente/login", {email, senha});
           if (response.data.success) {
             toast.success(response.data.message || 'Sucesso ao fazer login!')
             console.log(response)
@@ -92,6 +92,7 @@ const LoginGerente = () => {
               <Label>Email</Label>
               <Input 
                 placeholder="Seu email"
+                value={email}
                 onChange={e => setEmail(e.target.value)} 
               />
             </InputArea>
@@ -100,7 +101,8 @@ const LoginGerente = () => {
               <Label>Senha</Label>
               <Input 
                 placeholder="Sua senha"
-                onChange={e => setPassword(e.target.value)}
+                value={senha}
+                onChange={e => setsenha(e.target.value)}
               />
             </InputArea>
 

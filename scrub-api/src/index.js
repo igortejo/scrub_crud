@@ -1,16 +1,19 @@
 const sequelize = require("./config/database.js");
 const express = require('express');
+const cors = require("cors");
 const dotenv = require('dotenv');
 import pedidoRoutes from './routes/pedidoRoutes'
 import usuarioRoutes from './routes/usuarioRoutes'
 import produtoRoutes from './routes/produtoRoutes'
-// import authRoutes from "./routes/auth"
+import authRoutes from "./routes/auth"
 
 
 const port = 3000
 dotenv.config();
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors()); //evitar bloqueios de requisição
 
 //sincronização do banco de dados
 sequelize
@@ -27,6 +30,6 @@ sequelize
 app.use('/usuario', usuarioRoutes)
 app.use('/produto', produtoRoutes)
 app.use('/pedido', pedidoRoutes)
-// app.use('/auth', authRoutes)
+app.use('/auth', authRoutes)
 
 

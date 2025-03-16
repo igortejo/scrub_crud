@@ -65,6 +65,7 @@ const Form = ({ getUsers, onEdit, setOnEdit }) => {
             user.nome.value = onEdit.nome;
             user.email.value = onEdit.email;
             user.idade.value = onEdit.idade;
+            user.senha.value = onEdit.senha;
         }
     }, [onEdit]);
 
@@ -76,7 +77,8 @@ const Form = ({ getUsers, onEdit, setOnEdit }) => {
         if ( //se algum dos campos nao for preenchido
             !user.nome.value ||
             !user.email.value ||
-            !user.idade.value 
+            !user.idade.value ||
+            !user.senha.value 
         ) {
             return toast.warn("Preencha todos os campos!") 
         }
@@ -87,6 +89,7 @@ const Form = ({ getUsers, onEdit, setOnEdit }) => {
                 nome: user.nome.value,
                 email: user.email.value,
                 idade: Number(user.idade.value), //o form ta recebendo uma string mas o back espera um int, entao converti pra number
+                senha: user.senha.value,
               })
               .then(({ data }) => toast.success(data))
               .catch(({ data }) => toast.error(data));
@@ -97,6 +100,7 @@ const Form = ({ getUsers, onEdit, setOnEdit }) => {
                 nome: user.nome.value,
                 email: user.email.value,
                 idade: Number(user.idade.value), //o form ta recebendo uma string mas o back espera um int, entao converti pra number
+                senha: user.senha.value,
               })
               .then(({ data }) => toast.success(data))
               .catch(({ data }) => toast.error(data));
@@ -106,6 +110,7 @@ const Form = ({ getUsers, onEdit, setOnEdit }) => {
         user.nome.value = "";
         user.email.value = "";
         user.idade.value = "";
+        user.senha.value = "";
 
         setOnEdit(null); //para depois da edicao poder fazer uma inclusao sem da conflito
         getUsers(); //atualiza o grid
@@ -126,6 +131,10 @@ const Form = ({ getUsers, onEdit, setOnEdit }) => {
             <InputArea>
                 <Label>Idade</Label>
                 <Input name="idade" />
+            </InputArea>
+            <InputArea>
+                <Label>Senha</Label>
+                <Input name="senha" />
             </InputArea>
 
             <Button type="submit">SALVAR</Button>
