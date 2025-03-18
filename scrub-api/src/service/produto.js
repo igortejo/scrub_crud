@@ -1,4 +1,4 @@
-const  Produto  = require('../model/produto');
+import Produto from '../model/produto.js';
 
 
 export const listarProdutos = async () => {

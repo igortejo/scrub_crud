@@ -1,11 +1,12 @@
-const sequelize = require("./config/database.js");
-const express = require('express');
-const cors = require("cors");
-const dotenv = require('dotenv');
-import pedidoRoutes from './routes/pedidoRoutes'
-import usuarioRoutes from './routes/usuarioRoutes'
-import produtoRoutes from './routes/produtoRoutes'
-import authRoutes from "./routes/auth"
+import sequelize from './config/database.js';
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+
+import pedidoRoutes from './routes/pedidoRoutes.js'
+import usuarioRoutes from './routes/usuarioRoutes.js'
+import produtoRoutes from './routes/produtoRoutes.js'
+import authRoutes from "./routes/auth.js"
 
 
 const port = 3000
@@ -31,5 +32,7 @@ app.use('/usuario', usuarioRoutes)
 app.use('/produto', produtoRoutes)
 app.use('/pedido', pedidoRoutes)
 app.use('/auth', authRoutes)
+
+export default app;
 
 

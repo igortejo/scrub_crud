@@ -1,5 +1,5 @@
 import express from 'express'
-import {listarPedidosController, criarPedidoController, atualizarPedidoController, deletarPedidoController} from '../controller/pedido'
+import {listarPedidosController, criarPedidoController, atualizarPedidoController, deletarPedidoController} from '../controller/pedido.js'
 
 const router = express.Router()
 

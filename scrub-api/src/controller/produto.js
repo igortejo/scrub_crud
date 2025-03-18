@@ -1,4 +1,4 @@
-import {listarProdutos, criarProduto, atualizarProduto, deletarProduto} from '../service/produto'
+import {listarProdutos, criarProduto, atualizarProduto, deletarProduto} from '../service/produto.js'
 
 
 export const listarProdutosController = async (req, res) => {

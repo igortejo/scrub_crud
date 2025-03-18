@@ -1,4 +1,4 @@
-const  Pedido  = require('../model/pedido');
+import Pedido from '../model/pedido.js';
 
 export const listarPedidos = async (req, res) => {
   try {

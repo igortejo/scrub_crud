@@ -1,8 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import config from '../config/index';
-const  Usuario  = require('../model/usuario');
-import { database } from "../config/database"
+import config from '../config/index.js';
+import Usuario from '../model/usuario.js';
 
 
 export const loginUsuario = async(email, senha) => {

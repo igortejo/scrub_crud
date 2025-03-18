@@ -1,4 +1,4 @@
-import {listarUsuarios, criarUsuario, atualizarUsuario, deletarUsuario} from "../service/usuario"
+import {listarUsuarios, criarUsuario, atualizarUsuario, deletarUsuario} from "../service/usuario.js"
 
 
 export const listarUsuariosController = async (_, res) => {

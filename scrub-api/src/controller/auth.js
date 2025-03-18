@@ -1,9 +1,8 @@
-import { loginUsuario, getUsuarioFromToken, loginGerente, getGerenteFromToken } from "../service/auth";
+import { loginUsuario, getUsuarioFromToken, loginGerente, getGerenteFromToken } from "../service/auth.js";
 
 export const loginUsuarioController = async(req, res) => {
     try {        
         const {email, senha} = req.body;
-        console.log(email, senha)
         if(!email || !senha) {
             console.log("cheguei nos campos")
 

@@ -1,4 +1,4 @@
-import {listarPedidos, criarPedido, atualizarPedido, deletarPedido} from '../service/pedido'
+import {listarPedidos, criarPedido, atualizarPedido, deletarPedido} from '../service/pedido.js'
 
 
 export const listarPedidosController = async (req, res) => {

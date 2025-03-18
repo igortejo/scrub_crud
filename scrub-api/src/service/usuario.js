@@ -1,5 +1,5 @@
-const  Usuario  = require('../model/usuario');
-const bcrypt = require("bcrypt");
+import Usuario from '../model/usuario.js';
+import bcrypt from 'bcrypt';
 
 export const listarUsuarios = async (req, res) => {
   try {
