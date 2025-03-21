@@ -1,69 +1,83 @@
-import Usuario from '../model/usuario.js';
-import bcrypt from 'bcrypt';
+const Usuario = require('../model/usuario.js');
+const bcrypt = require('bcrypt');
 
-export const listarUsuarios = async (req, res) => {
+const listarUsuarios = async (req, res) => {
   try {
     return await Usuario.findAll();
-} catch (error) {
+  } catch (error) {
     throw new Error("Erro ao listar usuários: " + error.message);
-}
+  }
 };
 
-export const criarUsuario = async (req) => {
+const criarUsuario = async (req) => {
   try {
     const { nome, email, idade, senha } = req.body;
+    const usuarioExiste = await Usuario.findOne({ where: { email } });
+
+    if (usuarioExiste) {
+      throw new Error("E-mail já cadastrado!");
+    }
     // Gera o hash da senha
     const senhaHash = await bcrypt.hash(senha, 10);
     const usuario = await Usuario.create({
-         nome, 
-         email, 
-         idade, 
-         senha: senhaHash 
-        });
+      nome, 
+      email, 
+      idade, 
+      senha: senhaHash 
+    });
     return usuario;
-} catch (error) {
-    throw new Error("Erro ao criar usuário: " + error.message);
-} 
+
+  } catch (error) {
+    throw new Error(error.message);
+  }
 };
 
-export const atualizarUsuario = async (req) => {
+const atualizarUsuario = async (req) => {
   try {
     const { nome, email, idade, senha } = req.body;
     const { id } = req.params;
     const usuario = await Usuario.findByPk(id);
 
-    if (usuario) {
-      const usuario = await Usuario.update({
-        nome,
-        email,
-        idade,
-        senha
-      }, {
-        where: {
-          id: id
-        }
-      })
-    } 
-    return usuario;
+    if(!usuario) {
+      throw new Error("Usuário não encontrado!");
+    }
+
+    await Usuario.update({
+      nome,
+      email,
+      idade,
+      senha
+    }, {
+      where: {
+        id: id
+      }
+    });
+    return Usuario.findByPk(id); // Retorna o usuário atualizado
+
   } catch (error) {
-    throw new Error("Erro ao atualizar usuário: " + error.message);
+    throw new Error(error.message);
   }
 };
 
-export const deletarUsuario = async (req) => {
+const deletarUsuario = async (req) => {
   try {
     const { id } = req.params;
     const usuario = await Usuario.findByPk(id);
 
-    if (usuario) {
-      const usuario = await Usuario.destroy({
-        where: {
-          id: id
-        }
-      });
+    if (!usuario) {
+      throw new Error("Usuário não encontrado!");
     }
-    return usuario;
+
+    await Usuario.destroy({
+      where: {
+        id: id
+      }
+    });
+    return usuario; 
+
   } catch (error) {
-    throw new Error("Erro ao deletar usuário: " + error.message);
+    throw new Error(error.message);
   }
 };
+
+module.exports = { listarUsuarios, criarUsuario, atualizarUsuario, deletarUsuario };

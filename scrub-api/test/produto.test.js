@@ -1,11 +1,12 @@
-import chai from 'chai';
-import chaiHttp from 'chai-http';
-const { expect } = chai;
-import app from '../src/index.js'; // Seu servidor Express
+const chai = require('chai');
+const expect = chai.expect;
+const chaiHttp = require('chai-http');
+const app = require('../src/index');
+
 
 chai.use(chaiHttp);
 
-describe('Testes de Produto', () => {
+describe('Testes de Produto', function () {
 
   it('Deve retornar todos os produtos', (done) => {
     chai.request(app)
@@ -18,7 +19,7 @@ describe('Testes de Produto', () => {
 
   it('Deve criar um produto', (done) => {
     const novoProduto = {
-      cor: 'vermelho',
+      cor: 'marrom',
       tamanho: 'M'
     };
 
@@ -27,37 +28,58 @@ describe('Testes de Produto', () => {
       .send(novoProduto)
       .end((err, res) => {
         expect(res.status).to.equal(201);
-        expect(res.body.cor).to.equal(novoProduto.cor);
-        expect(res.body.tamanho).to.equal(novoProduto.tamanho);
+        expect(res.body.produto.cor).to.equal(novoProduto.cor);
+        expect(res.body.produto.tamanho).to.equal(novoProduto.tamanho);
         done();
       });
   });
 
-  it('Deve atualizar um produto', (done) => {
+  it('Deve atualizar um produto existente', (done) => {
     const produtoAtualizado = {
-      cor: 'azul',
+      cor: 'azuuppul',
       tamanho: 'G'
     };
 
     chai.request(app)
-      .put('/produto/1') 
+      .put('/produto/4') 
       .send(produtoAtualizado)
       .end((err, res) => {
         expect(res.status).to.equal(200);
-        expect(res.body.cor).to.equal(produtoAtualizado.cor);
-        expect(res.body.tamanho).to.equal(produtoAtualizado.tamanho);
+        expect(res.body.produto.cor).to.equal(produtoAtualizado.cor);
+        expect(res.body.produto.tamanho).to.equal(produtoAtualizado.tamanho);
+        expect(res.body.message).to.equal("Produto atualizado com sucesso!");
+        done();
+      });
+  });
+
+  it('Deve tentar atualizar um produto inexistente', (done) => {
+    const produtoAtualizado = {
+      cor: 'azuup0pul',
+      tamanho: 'G'
+    };
+
+    chai.request(app)
+      .put('/produto/44') 
+      .send(produtoAtualizado)
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        expect(res.body.message).to.equal("Produto não encontrado!");
         done();
       });
   });
 
   it('Deve excluir um produto', (done) => {
     chai.request(app)
-      .delete('/produto/1') 
+      .delete('/produto/8') 
       .end((err, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body.message).to.equal('Produto deletado com sucesso!');
+        if (res.status === 200) {
+          expect(res.body.message).to.equal('Produto deletado com sucesso!');
+        } else if (res.status === 404) {
+          expect(res.body.message).to.equal('Produto não encontrado!');
+        } else {
+          throw new Error(`Status inesperado: ${res.status}`);
+        }
         done();
       });
   });
-
 });

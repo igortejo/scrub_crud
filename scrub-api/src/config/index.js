@@ -3,4 +3,5 @@ const config = {}
 
 config.JWT_KEY = 'awsdawd$a~wdfawf*&¨%bgadcsf';
 
-export default config
+module.exports = config;
+

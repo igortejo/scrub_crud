@@ -1,5 +1,5 @@
-import express from 'express'
-import { loginUsuarioController, getUsuarioFromTokenController, loginGerenteController, getGerenteFromTokenController } from '../controller/auth.js';
+const express = require('express');
+const { loginUsuarioController, getUsuarioFromTokenController, loginGerenteController, getGerenteFromTokenController } = require('../controller/auth.js');
 
 const router = express.Router()
 
@@ -9,5 +9,5 @@ router.get('/cliente/getUsuarioDetalhes', getUsuarioFromTokenController);
 router.post('/gerente/login', loginGerenteController);
 router.get('/gerente/getGerenteDetalhes', getGerenteFromTokenController);
 
+module.exports = router;
 
-export default router

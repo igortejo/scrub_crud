@@ -1,5 +1,5 @@
-import express from 'express'
-import {listarPedidosController, criarPedidoController, atualizarPedidoController, deletarPedidoController} from '../controller/pedido.js'
+const express = require('express');
+const { listarPedidosController, criarPedidoController, atualizarPedidoController, deletarPedidoController } = require('../controller/pedido.js');
 
 const router = express.Router()
 
@@ -8,4 +8,4 @@ router.post('/', criarPedidoController);
 router.put('/:id', atualizarPedidoController);
 router.delete('/:id', deletarPedidoController);
 
-export default router
+module.exports = router;

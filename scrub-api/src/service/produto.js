@@ -1,63 +1,65 @@
-import Produto from '../model/produto.js';
+const Produto = require('../model/produto.js');
 
-
-export const listarProdutos = async () => {
+const listarProdutos = async () => {
     try {
-        return await Produto.findAll()
+        return await Produto.findAll();
     } catch (error) {
         throw new Error("Erro ao listar produtos: " + error.message);
     }
-}
+};
 
-export const criarProduto = async (req) => {
+const criarProduto = async (req) => {
     try {
-        const {cor, tamanho} = req.body;
+        const { cor, tamanho } = req.body;
         const produto = await Produto.create({
             cor,
             tamanho
-        })
+        });
         return produto;
     } catch (error) {
-        throw new Error("Erro ao criar produto: " + error.message);
+        throw new Error( error.message);
     }
-}
+};
 
-export const atualizarProduto = async (req) => {
+const atualizarProduto = async (req) => {
     try {
-        const {cor, tamanho} = req.body;
-        const {id} = req.params;
-        const produto = await Produto.findByPk(id)
+        const { cor, tamanho } = req.body;
+        const { id } = req.params;
+        const produto = await Produto.findByPk(id);
 
-        if(produto) {
-            const produto = await Produto.update({
-                cor,
-                tamanho
-            }, {
-                where: {
-                    id: id
-                }
-            })
+        if (!produto) {
+            throw new Error("Produto não encontrado!");
         }
-        return produto;
+
+        await Produto.update(
+            { cor, tamanho },
+            { where: { id: id } }
+        );
+        return Produto.findByPk(id); // Retorna o produto atualizado
+
     } catch (error) {
-        throw new Error("Erro ao atualizar produto: " + error.message);
+        throw new Error(error.message);
     }
-}
+};
 
-export const deletarProduto = async (req) => {
-  try {
-    const {id} = req.params;
-    const produto = await Produto.findByPk(id);
+const deletarProduto = async (req) => {
+    try {
+        const { id } = req.params;
+        const produto = await Produto.findByPk(id);
 
-    if(produto) {
-        const produto = await Produto.destroy({
-            where: {
-                id: id
-            }
-        })
+        if(!produto) {
+            throw new Error("Produto não encontrado!");
+        }
+
+        
+        await Produto.destroy({
+            where: { id: id }
+        });
+        return produto;
+        
+    } catch (error) {
+        throw new Error(error.message);
     }
-    return produto;
-  } catch (error) {
-    throw new Error("Erro ao deletar produto: " + error.message);
-  }
-}
+};
+
+module.exports = { listarProdutos, criarProduto, atualizarProduto, deletarProduto };
